@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext } from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { DataProvider } from './context/DataContext'
 import { Toaster } from 'react-hot-toast'
 import LandingPage from './pages/LandingPage'
@@ -10,6 +10,15 @@ import Upload from './pages/Upload'
 import Reports from './pages/Reports'
 import ChatWithPDF from './pages/ChatWithPDF'
 import Visualization from './pages/Visualization'
+
+// Info Pages — Product
+import { FeaturesPage, SolutionsPage, PricingPage, IntegrationsPage, ChangelogPage } from './pages/info/ProductPages'
+// Info Pages — Company
+import { AboutPage, ContactPage } from './pages/info/CompanyPages'
+// Info Pages — Resources
+import { DocsPage, BlogPage } from './pages/info/ResourcePages'
+// Info Pages — Legal
+import { PrivacyPage, TermsPage, CookiePolicyPage, SecurityPage } from './pages/info/LegalPages'
 
 // Auth Context
 export const AuthContext = createContext(null)
@@ -22,6 +31,13 @@ function ProtectedRoute({ children }) {
   const { user } = useAuth()
   if (!user) return <Navigate to="/login" replace />
   return children
+}
+
+// Scroll to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  React.useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+  return null
 }
 
 export default function App() {
@@ -53,6 +69,7 @@ export default function App() {
     <AuthContext.Provider value={{ user, login, logout }}>
       <DataProvider user={user}>
         <Router>
+          <ScrollToTop />
           <Toaster
             position="top-right"
             toastOptions={{
@@ -66,24 +83,36 @@ export default function App() {
             }}
           />
           <Routes>
+            {/* Main App */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={
-              <ProtectedRoute><Dashboard /></ProtectedRoute>
-            } />
-            <Route path="/upload" element={
-              <ProtectedRoute><Upload /></ProtectedRoute>
-            } />
-            <Route path="/reports" element={
-              <ProtectedRoute><Reports /></ProtectedRoute>
-            } />
-            <Route path="/chat" element={
-              <ProtectedRoute><ChatWithPDF /></ProtectedRoute>
-            } />
-            <Route path="/visualization" element={
-              <ProtectedRoute><Visualization /></ProtectedRoute>
-            } />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/upload" element={<ProtectedRoute><Upload /></ProtectedRoute>} />
+            <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+            <Route path="/chat" element={<ProtectedRoute><ChatWithPDF /></ProtectedRoute>} />
+            <Route path="/visualization" element={<ProtectedRoute><Visualization /></ProtectedRoute>} />
+
+            {/* Product Pages */}
+            <Route path="/features" element={<FeaturesPage />} />
+            <Route path="/solutions" element={<SolutionsPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/integrations" element={<IntegrationsPage />} />
+            <Route path="/changelog" element={<ChangelogPage />} />
+
+            {/* Company Pages */}
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+
+            {/* Resource Pages */}
+            <Route path="/docs" element={<DocsPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+
+            {/* Legal Pages */}
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/cookies" element={<CookiePolicyPage />} />
+            <Route path="/security" element={<SecurityPage />} />
           </Routes>
         </Router>
       </DataProvider>

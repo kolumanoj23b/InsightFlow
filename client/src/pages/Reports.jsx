@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Sidebar } from './Dashboard'
+import { PageShell } from './Dashboard'
 import { useData } from '../context/DataContext'
 import './Reports.css'
 
@@ -109,10 +109,7 @@ export default function Reports() {
     : allReports.filter(r => r.status === filter)
 
   return (
-    <div className="app-layout">
-      <Sidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} currentPath="/reports" />
-      <main className={`main-content ${sidebarCollapsed ? 'expanded' : ''}`}>
-        <div className="page-enter">
+    <PageShell currentPath="/reports" breadcrumb="Reports">
           <div className="dash-header">
             <div>
               <h1>Reports</h1>
@@ -165,8 +162,6 @@ export default function Reports() {
               <p>No reports found for this filter.</p>
             </motion.div>
           )}
-        </div>
-      </main>
-    </div>
+    </PageShell>
   )
 }

@@ -6,3 +6,8 @@ PyPDF2
 faiss-cpu
 sentence-transformers
 requests
+python-dotenv
+openai
+google-generativeai
+pydantic
+tenacity

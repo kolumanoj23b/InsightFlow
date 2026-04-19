@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone'
 import Papa from 'papaparse'
 import * as XLSX from 'xlsx'
 import toast from 'react-hot-toast'
-import { Sidebar } from './Dashboard'
+import { PageShell } from './Dashboard'
 import { useData } from '../context/DataContext'
 import './Upload.css'
 
@@ -119,7 +119,7 @@ function StatsCards({ stats }) {
 }
 
 export default function Upload() {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [sidebarCollapsed] = useState(false)
   const [file, setFile] = useState(null)
   const [parsedData, setParsedData] = useState(null)
   const [columns, setColumns] = useState([])
@@ -267,10 +267,7 @@ export default function Upload() {
   }
 
   return (
-    <div className="app-layout">
-      <Sidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} currentPath="/upload" />
-      <main className={`main-content ${sidebarCollapsed ? 'expanded' : ''}`}>
-        <div className="page-enter">
+    <PageShell currentPath="/upload" breadcrumb="Upload & Analyze">
           <div className="dash-header">
             <div>
               <h1>Upload & Analyze</h1>
@@ -416,8 +413,6 @@ export default function Upload() {
               </div>
             </div>
           )}
-        </div>
-      </main>
-    </div>
+    </PageShell>
   )
 }

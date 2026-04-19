@@ -53,13 +53,20 @@ export default function Register() {
         <div className="auth-card glass-card">
           <Link to="/" className="auth-logo">
             <div className="logo-icon">
-              <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
-                <path d="M14 2L26 8V20L14 26L2 20V8L14 2Z" stroke="url(#regGrad)" strokeWidth="2" fill="none"/>
-                <path d="M14 10L20 13V19L14 22L8 19V13L14 10Z" fill="url(#regGrad)"/>
+              <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+                <path d="M16 2L29.8564 10V26L16 34L2.14359 26V10L16 2Z" stroke="url(#regGrad_new)" strokeWidth="3" strokeLinejoin="round" fill="none" />
+                <path d="M16 8L22.9282 12V20L16 24L9.0718 20V12L16 8Z" fill="url(#regGrad_pulse)" fillOpacity="0.6">
+                  <animate attributeName="fill-opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite" />
+                </path>
+                <circle cx="16" cy="16" r="3" fill="#fff">
+                  <animate attributeName="r" values="2;3.5;2" dur="1.5s" repeatCount="indefinite" />
+                </circle>
                 <defs>
-                  <linearGradient id="regGrad" x1="2" y1="2" x2="26" y2="26">
-                    <stop stopColor="#6c5ce7"/>
-                    <stop offset="1" stopColor="#00d2ff"/>
+                  <linearGradient id="regGrad_new" x1="2" y1="2" x2="30" y2="30">
+                    <stop stopColor="#6c5ce7"/><stop offset="1" stopColor="#00d2ff"/>
+                  </linearGradient>
+                  <linearGradient id="regGrad_pulse" x1="16" y1="8" x2="16" y2="24">
+                    <stop stopColor="#a29bfe"/><stop offset="1" stopColor="#6c5ce7"/>
                   </linearGradient>
                 </defs>
               </svg>
