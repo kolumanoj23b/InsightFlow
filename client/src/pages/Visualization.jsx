@@ -15,7 +15,7 @@ import {
   Filler,
 } from 'chart.js'
 import { Bar, Line, Doughnut, Pie, Scatter } from 'react-chartjs-2'
-import { Sidebar } from './Dashboard'
+import { PageShell } from './Dashboard'
 import { useData } from '../context/DataContext'
 import './Visualization.css'
 
@@ -454,10 +454,7 @@ export default function Visualization() {
   const hasData = uploadedData && uploadedData.length > 0
 
   return (
-    <div className="app-layout">
-      <Sidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} currentPath="/visualization" />
-      <main className={`main-content ${sidebarCollapsed ? 'expanded' : ''}`}>
-        <div className="page-enter">
+    <PageShell currentPath="/visualization" breadcrumb="Visualizations">
           <div className="dash-header">
             <div>
               <h1>Visualizations</h1>
@@ -650,8 +647,6 @@ export default function Visualization() {
               </motion.div>
             </>
           )}
-        </div>
-      </main>
-    </div>
+    </PageShell>
   )
 }

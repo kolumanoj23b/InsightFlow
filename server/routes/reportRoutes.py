@@ -14,3 +14,9 @@ def list_reports():
 def generate_report():
     data = request.get_json() or {}
     return ReportController.generate_report(data.get('dataset_id'))
+
+@report_bp.route('/pipeline', methods=['POST'])
+@require_auth
+def generate_pipeline_report():
+    data = request.get_json() or {}
+    return ReportController.generate_pipeline_report(data.get('document_text'))

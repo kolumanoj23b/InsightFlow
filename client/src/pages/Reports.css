@@ -5,7 +5,7 @@
 .reports-filters {
   display: flex;
   gap: 8px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .filter-btn {
@@ -55,7 +55,7 @@
 }
 
 .report-card {
-  padding: 24px;
+  padding: 22px;
   transition: all var(--transition-base);
 }
 
@@ -63,28 +63,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .report-icon-wrap {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
   border-radius: 10px;
   background: rgba(108, 92, 231, 0.12);
   color: var(--accent-tertiary);
 }
 
 .report-status {
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: 0.7rem; font-weight: 600;
   padding: 4px 10px;
   border-radius: var(--radius-full);
 }
 
-.report-status.complete {
+.report-status.complete,
+.report-status.indexed {
   background: rgba(0, 230, 118, 0.1);
   color: var(--accent-success);
 }
@@ -95,67 +92,45 @@
 }
 
 .report-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 8px;
+  font-size: 1rem; font-weight: 600; margin-bottom: 6px;
 }
 
 .report-file {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: flex; align-items: center; gap: 8px;
   font-size: 0.8rem;
   color: var(--text-muted);
   font-family: var(--font-mono);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .file-badge {
   padding: 2px 8px;
   border-radius: var(--radius-sm);
-  font-size: 0.6rem;
-  font-weight: 700;
+  font-size: 0.6rem; font-weight: 700;
   letter-spacing: 0.5px;
 }
 
-.file-badge.csv {
-  background: rgba(108, 92, 231, 0.12);
-  color: var(--accent-tertiary);
-}
-
-.file-badge.xlsx {
-  background: rgba(0, 210, 255, 0.12);
-  color: var(--accent-secondary);
-}
+.file-badge.csv { background: rgba(108, 92, 231, 0.12); color: var(--accent-tertiary); }
+.file-badge.xlsx { background: rgba(0, 210, 255, 0.12); color: var(--accent-secondary); }
+.file-badge.pdf { background: rgba(247, 37, 133, 0.12); color: var(--accent-pink); }
 
 .report-meta {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
+  display: flex; gap: 16px;
+  margin-bottom: 16px; flex-wrap: wrap;
 }
 
 .meta-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  display: flex; align-items: center; gap: 5px;
+  font-size: 0.75rem; color: var(--text-muted);
 }
 
-.report-actions {
-  display: flex;
-  gap: 8px;
-}
+.report-actions { display: flex; gap: 8px; }
 
 .report-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  display: flex; align-items: center; gap: 6px;
   padding: 7px 14px;
-  border-radius: var(--radius-md);
-  font-size: 0.8rem;
-  font-weight: 500;
+  border-radius: 8px;
+  font-size: 0.8rem; font-weight: 500;
   transition: all var(--transition-fast);
 }
 
@@ -167,6 +142,7 @@
 
 .report-btn.view:hover {
   background: rgba(108, 92, 231, 0.18);
+  transform: translateY(-1px);
 }
 
 .report-btn.download {
@@ -178,6 +154,7 @@
 .report-btn.download:hover {
   background: rgba(255, 255, 255, 0.06);
   color: var(--text-primary);
+  transform: translateY(-1px);
 }
 
 .report-btn.delete {
@@ -195,8 +172,12 @@
 
 .empty-state {
   text-align: center;
-  padding: 60px;
+  padding: 80px 32px;
   color: var(--text-muted);
+  background: rgba(255,255,255,0.015);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 14px;
+  margin-top: 8px;
 }
 
 .btn-primary {
@@ -206,10 +187,10 @@
   padding: 10px 20px;
   background: var(--accent-primary);
   color: white;
-  border-radius: var(--radius-md);
-  font-size: 0.85rem;
-  font-weight: 600;
+  border-radius: 10px;
+  font-size: 0.85rem; font-weight: 600;
   transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
 .btn-primary:hover {
@@ -219,7 +200,7 @@
 }
 
 @media (max-width: 768px) {
-  .reports-grid {
-    grid-template-columns: 1fr;
-  }
+  .reports-grid { grid-template-columns: 1fr; }
+  .reports-filters { flex-wrap: wrap; }
 }
+

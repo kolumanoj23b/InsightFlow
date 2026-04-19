@@ -1,6 +1,9 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from routes.authRoutes import auth_bp
 from routes.chatRoutes import chat_bp

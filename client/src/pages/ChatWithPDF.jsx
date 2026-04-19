@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useDropzone } from 'react-dropzone'
 import toast from 'react-hot-toast'
-import { Sidebar } from './Dashboard'
+import { PageShell } from './Dashboard'
 import { RAGEngine } from '../utils/pdfRagEngine'
 import { useData } from '../context/DataContext'
 import './ChatWithPDF.css'
@@ -217,8 +217,8 @@ export default function ChatWithPDF() {
     setInputValue('')
     setIsTyping(true)
 
-    // Query the RAG engine (with slight delay for UX feel)
-    setTimeout(() => {
+    // Query the RAG engine
+    setTimeout(async () => {
       const engine = ragEngineRef.current
       if (!engine || !engine.isReady) {
         setMessages(prev => [...prev, {
@@ -231,7 +231,7 @@ export default function ChatWithPDF() {
         return
       }
 
-      const result = engine.query(question)
+      const result = await engine.query(question)
       const aiMsg = {
         role: 'assistant',
         text: result.answer,
@@ -240,7 +240,7 @@ export default function ChatWithPDF() {
       }
       setMessages(prev => [...prev, aiMsg])
       setIsTyping(false)
-    }, 600 + Math.random() * 400)
+    }, 100)
   }
 
   const handleReset = () => {
@@ -256,10 +256,8 @@ export default function ChatWithPDF() {
   }
 
   return (
-    <div className="app-layout">
-      <Sidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} currentPath="/chat" />
-      <main className={`main-content ${sidebarCollapsed ? 'expanded' : ''}`}>
-        <div className="page-enter chat-page">
+    <PageShell currentPath="/chat" breadcrumb="Chat with PDF">
+         <div className="chat-page">
           {!pdfFile ? (
             /* Upload State */
             <div className="chat-upload-state">
@@ -485,8 +483,7 @@ export default function ChatWithPDF() {
               </form>
             </div>
           )}
-        </div>
-      </main>
-    </div>
+         </div>
+    </PageShell>
   )
 }

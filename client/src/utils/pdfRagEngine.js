@@ -244,7 +244,7 @@ export class RAGEngine {
     return this.documentInfo
   }
 
-  query(question, topK = 3) {
+  async query(question, topK = 3) {
     if (!this.isReady) return { answer: 'Please upload a PDF first.', sources: [] }
 
     const questionLower = question.toLowerCase().trim()
@@ -255,7 +255,8 @@ export class RAGEngine {
     }
 
     const queryEntities = question.match(/[A-Z][a-z]+|[0-9]+(?:\.[0-9]+)?%?/g) || []
-    let results = this.vectorizer.search(question, 5)
+    // Increased from 5 to 15 chunks to provide massive context back to the Pro model
+    let results = this.vectorizer.search(question, 15)
     
     if (queryEntities.length > 0) {
       results = results.map(res => {
@@ -273,9 +274,25 @@ export class RAGEngine {
 
     const relevantChunks = results.map(r => this.chunks[r.index])
     const sources = Array.from(new Set(relevantChunks.flatMap(c => c.pageNums))).sort((a, b) => a - b).map(p => `Page ${p}`)
-    const answer = this._reasonOverContext(question, relevantChunks)
+    const contextText = relevantChunks.map(c => c.text).join('\n\n')
 
-    return { answer, sources, context: relevantChunks.map(c => c.text).join('\n\n') }
+    try {
+      const response = await fetch('http://localhost:5000/api/chat/query', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: question,
+          context: contextText,
+          document_id: this.documentInfo?.fileName || 'unknown'
+        })
+      });
+      const data = await response.json();
+      return { answer: data.answer || this._reasonOverContext(question, relevantChunks), sources, context: contextText }
+    } catch (err) {
+      console.error("Backend error, falling back to local reasoning:", err);
+      const answer = this._reasonOverContext(question, relevantChunks)
+      return { answer, sources, context: contextText }
+    }
   }
 
   _reasonOverContext(question, chunks) {
